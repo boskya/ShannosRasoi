@@ -1,49 +1,47 @@
 <?php
 /**
- * Sets up the theme and provides some helper functions. Some helper functions
- * are used in the theme as custom template tags. Others are attached to action and
- * filter hooks in WordPress to change core functionality.
- *
- *
- * For more information on hooks, actions, and filters, see http://codex.wordpress.org/Plugin_API.
+ * @package Recipify
+ * @subpackage Functions
+ * @version 0.1
+ * @author Bosky Atlani
+ * @link http://boskyatlani.me
+ * @license http://www.gnu.org/licenses/gpl-2.0.html
  */
-
-/** Sets up custom recipe type **/
-/*-------------------------------------------------------------------------------------------*/
-/* shanno_recipeWithImage Post Type */
-/*-------------------------------------------------------------------------------------------*/
 
 /* Load the hybrid core theme framework */
 require_once( trailingslashit( TEMPLATEPATH ) . 'library/hybrid.php' );
 $theme = new Hybrid();
 
+/* set up the recipify theme */
 $recipify = new Recipify();
 add_action( 'after_setup_theme', array($recipify, 'setup'), 10 );
 
 class Recipify {
-	
+
 	/*
 		Intialize the theme using the Hybrid core framework
 	*/
 	function setup()
 	{
-		
+
 		$prefix = hybrid_get_prefix();
-				
+
 		add_theme_support( 'hybrid-core-menus', array( 'primary'));
 		add_theme_support( 'hybrid-core-seo' );
 		add_theme_support( 'hybrid-core-template-hierarchy' );
 		add_theme_support( 'custom-background', array( 'default-color' => 'f2f2f2' ) );
 		add_theme_support( 'cleaner-gallery' );
-		
-		
+
+		add_action( 'wp_enqueue_scripts', array($this,'recipify_scripts') );
 		$this->initialize_custom_header();
 		$this->create_post_type();
+
 		
-		
-		$this->load_stylesheet();				
 	}
-	
+
+	/*
+	* Adds support for custom header
+	*/
 	function initialize_custom_header() {
 	$args = array(
 				'default-image' => get_template_directory_uri() . 'images/header.jpg',
@@ -55,22 +53,25 @@ class Recipify {
 
 	}	
 	
+	/*
+	* Add support for custom post type of type 'Recipe'
+	*/
 	function create_post_type() {
 		$labels = array(
-		    'name' => __('RecipesWithImage'),
-		  
+		    'name' => __('Recipes'),
+
 		);
 		$args = array(
 			'labels' => $labels,
 			'public' => true,
 		); 
-		register_post_type('recipeWithImage',$args);		
+		register_post_type('Recipe',$args);		
 	}
-	
+
 	/*
-	 Add support of stylesheet
+	 Load style sheets and scripts needed for recipify theme
 	*/
-	function load_stylesheet()
+	function recipify_scripts()
 	{
 		if ( !is_admin() ) { 
 		    wp_register_style(
@@ -80,8 +81,6 @@ class Recipify {
 		        0.1
 		    );
 		}
-		wp_enqueue_style( 'recipify-style' );
-
 	}
 
 	/*
@@ -99,11 +98,5 @@ class Recipify {
 			);
 			add_theme_support('custom-background', $recipify_custom_background );		
 	}
-	
+
 }
-?>
-
-
-
-		
-		
