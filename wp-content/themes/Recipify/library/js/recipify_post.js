@@ -120,9 +120,10 @@ jQuery(function(jQuery) {
 		*/
 		
    		jQuery('.custom_clear_image_button').click(function() {  
-	        var defaultImage = jQuery(this).parent().siblings('.custom_default_image').text();  
-	        jQuery(this).parent().siblings('.custom_upload_image').val('');  
-	        jQuery(this).parent().siblings('.custom_preview_image').attr('src', defaultImage);  
+	        jQuery(this).siblings('.custom_upload_image').attr({ 'value':'' } );  
+	        jQuery(this).siblings('.custom_preview_image').attr({'src':'img/image.png'});  
 	        return false;  
 	    });  
+	
+	
 });

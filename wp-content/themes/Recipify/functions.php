@@ -16,26 +16,31 @@ $theme = new Hybrid();
 $recipify = new Recipify();
 add_action( 'after_setup_theme', array($recipify, 'setup'), 10 );
 
+/* set up custom Recipe type */
+require_once( trailingslashit(TEMPLATEPATH) . 'recipify_post.php');
+$recipify_post = new Recipify_post();
+add_action('init', array($recipify_post,'setup_scripts'));
+add_action('init', array($recipify_post,'setup'));
+
+
+
 class Recipify {
 
 	/*
 		Intialize the theme using the Hybrid core framework
 	*/
-	function setup()
-	{
+	function setup(){	
 
 		$prefix = hybrid_get_prefix();
-
+		
 		add_theme_support( 'hybrid-core-menus', array( 'primary'));
-		add_theme_support( 'hybrid-core-seo' );
 		add_theme_support( 'hybrid-core-template-hierarchy' );
 		add_theme_support( 'custom-background', array( 'default-color' => 'f2f2f2' ) );
 		add_theme_support( 'cleaner-gallery' );
-
+		
 		add_action( 'wp_enqueue_scripts', array($this,'recipify_scripts') );
 		$this->initialize_custom_header();
-		$this->create_post_type();
-
+		
 		
 	}
 
@@ -53,41 +58,27 @@ class Recipify {
 
 	}	
 	
-	/*
-	* Add support for custom post type of type 'Recipe'
-	*/
-	function create_post_type() {
-		$labels = array(
-		    'name' => __('Recipes'),
-
-		);
-		$args = array(
-			'labels' => $labels,
-			'public' => true,
-		); 
-		register_post_type('Recipe',$args);		
-	}
+	
 
 	/*
 	 Load style sheets and scripts needed for recipify theme
 	*/
-	function recipify_scripts()
-	{
+	function recipify_scripts() {
 		if ( !is_admin() ) { 
 		    wp_register_style(
 		        'recipify-style',
-		       trailingslashit( get_template_directory_uri() ). '/style.css',
+		       trailingslashit( get_template_directory_uri() ). 'style.css',
 		        false,
 		        0.1
 		    );
+			wp_enqueue_style( 'recipify-style' );
 		}
 	}
 
 	/*
 	  add support for custom background
 	*/
-	function custom_background()
-	{
+	function custom_background() {
 		// custom backgrounds
 			$recipify_custom_background = array(
 				// Background color default
@@ -98,5 +89,6 @@ class Recipify {
 			);
 			add_theme_support('custom-background', $recipify_custom_background );		
 	}
+	
 
 }

@@ -8,7 +8,8 @@ Tags: cooking, recipes, recipe microformat, multi languages
 */
 
 
-@import url(stylesheet/default.css);
+@import url(css/main.css);
+@import url(css/normalize.css);
 
 /*
 accessibility 
@@ -63,7 +64,7 @@ header[role=banner] #searchform input[type=submit]{
 	
 header[role=banner] #s {
 	font-size:1.3em;
-	background:url(images/icon-search.png) no-repeat 7px 10px #f2f2f2;
+	background:url(library/images/icon-search.png) no-repeat 7px 10px #f2f2f2;
 	padding:7px 10px 7px 30px;
 	min-width:270px;
 	outline:none;
@@ -143,7 +144,7 @@ nav[role=navigation] ul.menu li ul.sub-menu
 	width: 200px;
 	word-wrap: break-word;
 	display:inline;
-	padding-top:5px;
+	margin-top: 5px;
 }
 
 		

@@ -33,7 +33,8 @@ class Recipify_post {
 	 */
 	function load_scripts()
 	{
-		wp_enqueue_script('recipify_post', trailingslashit(get_template_directory_uri()) . 'library/js/recipify_post.js');		
+		wp_enqueue_script('recipify_post', trailingslashit(get_template_directory_uri()) . 'library/js/recipify_post.js', array('jquery','media-upload','thickbox'));		
+		wp_enqueue_style('thickbox');
 	}
 	
 	
@@ -83,20 +84,52 @@ class Recipify_post {
 		*/
 		function recipe_add_meta_boxes()
 		{
-			add_meta_box('recipe_ingredients', 
+			add_meta_box('0recipe_description',
+						 'Description',
+						  array($this,'display_description'),
+						 'recipe',
+						 'normal',
+						 'high');
+						
+			add_meta_box('1recipe_final_image',
+						  'Recipe Image',
+						  array($this,'display_recipe_final_image'),
+						  'recipe',
+						  'normal',
+						   'high');
+			
+			add_meta_box('2recipe_ingredients', 
 						'Recipe Ingredients',
 						array($this,'display_ingredients'),
 						'recipe',
 						'normal',
-						'default');
+						'high');
 					
-			add_meta_box('recipe_directions',
+			add_meta_box('3recipe_directions',
 						  'Recipe Directions',
 						  array($this,'display_directions'),
 						  'recipe',
 						  'normal',
-						  'default');
+						  'high');
+						
+			add_meta_box('4recipe_directions_gallery',
+						  'Recipe Directions Photo gallery',
+						  array($this,'display_directions_gallery'),
+						  'recipe',
+						  'normal',
+						  'high');
 		}
+		
+		function display_description($object, $box)
+		{
+			global $post;
+			?>
+			<?php wp_nonce_field(basename(__FILE__),'recipe_description_nonce');
+			$meta = get_post_meta($post->ID, "recipe_description", true); ?>
+			<textarea name="recipe_description" rows="3" cols="100"><?php echo $meta ?></textarea>
+			<?php
+		}
+		
 		
 		function display_ingredients($object, $box)
 		{
@@ -137,7 +170,6 @@ class Recipify_post {
 				global $post;
 				?>
 				<?php wp_nonce_field(basename (__FILE__), 'recipe_directions_nonce'); ?>
-				<input type="hidden" name="recipe-directions-count" id="recipe-directions-count" value=0/>
 				<ol id="recipe-directions">
 				<?php 
 				$meta = get_post_meta($post->ID, "recipe_directions", true);
@@ -154,6 +186,53 @@ class Recipify_post {
 			     }
 		}
 		
+		
+		function display_directions_gallery($object, $box)
+		{
+			global $post;
+			
+			wp_nonce_field(basename (__FILE__), 'recipe_directions_gallery_nonce'); 
+			
+			// get value of this field if it exists for this post
+			$meta = get_post_meta($post->ID, 'recipe_directions_gallery', true);
+			echo '<ol id="directions-gallery">';
+						
+			if ($meta) 
+			{  
+				foreach($meta as $row) 
+				{   
+		        	$this->directions_gallery_list($row);
+		        }
+			}
+			else
+			{
+				$this->directions_gallery_list(null);
+			} 
+			 
+		
+			echo '</ol>';
+		}
+		
+		function display_recipe_final_image($object, $box)
+		{
+			global $post;
+
+			wp_nonce_field(basename (__FILE__), 'recipe_final_image_nonce');		
+			$meta = get_post_meta($post->ID, 'recipe_final_image', true);
+			$image = get_template_directory_uri().'/img/image.png';  
+			if ($meta)
+			{
+			 	$image =  wp_get_attachment_image_src($meta, 'medium'); 
+				$image = $image[0]; 
+			}
+				
+			echo  '<input name="recipe-final-image" type="hidden" class="custom_upload_image" value="'.$meta.'" /> 
+			           <img src="'.$image.'" class="custom_preview_image" alt="" /><br /> 
+			              <input class="custom_upload_image_button button" type="button" value="Choose Image" />
+						  <input class="custom_clear_image_button button" type="button" value="Clear Image" /> '; 
+		}
+		
+		
 		function directions_list($i, $row)
 		{
 			?>
@@ -164,6 +243,24 @@ class Recipify_post {
 				</li>  
 			<?php
 		}
+
+		function directions_gallery_list($row)
+		{
+			$image = get_template_directory_uri().'/img/image.png';  
+			if ($row)
+			{
+			 	$image =  wp_get_attachment_image_src($row, 'medium'); 
+				$image = $image[0]; 
+			}	
+				echo '<li>'	;
+			    echo  '<input name="recipe-directions-gallery[]" type="hidden" class="custom_upload_image" value="'.$row.'" /> 
+			                <img src="'.$image.'" class="custom_preview_image" alt="" /><br /> 
+			                    <input class="custom_upload_image_button button recipe_directions_button" type="button" value="Choose Image" /> 
+			                       <input type=button  class="recipe_directions_add recipe_directions_button" value="Add"/>    
+						          <input type=button  class="recipe_directions_remove recipe_directions_button" value="Remove"/>';
+				echo '</li>';
+		}
+
 
 	function recipe_ingredients_table($name, $quantity, $notes)
 	{
@@ -193,8 +290,11 @@ class Recipify_post {
 	
 	function save_post($post_id)
 	{
-		if (!wp_verify_nonce($_POST['recipe_ingredients_nonce'], basename(__FILE__)))  
-	        return $post_id;  
+	    if ( empty($post_id) )  
+	        return;
+	
+		if(!$this->verify_nonce($post_id))
+			return $post_id;
 
 	    // check autosave  
 	    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)  
@@ -207,17 +307,46 @@ class Recipify_post {
 	        } elseif (!current_user_can('edit_post', $post_id)) {  
 	            return $post_id;  
 	    }
-	
+				
+		$this->save_description($post_id);
+		$this->save_ingredients($post_id);
 		$this->save_directions($post_id);
+		$this->save_directions_gallery($post_id);
+		$this->save_recipe_final_image($post_id);
 	   
-	 	// get me the count
+	
+	}
+	
+	function verify_nonce($post_id)
+	{
+	 	if (!isset($_POST['recipe_ingredients_nonce']) || !wp_verify_nonce($_POST['recipe_ingredients_nonce'], basename(__FILE__)))  
+		     return false;
+		
+		if (!wp_verify_nonce($_POST['recipe_final_image_nonce'], basename(__FILE__)))
+				return false;				
+
+		if (!wp_verify_nonce($_POST['recipe_directions_nonce'], basename(__FILE__)))
+			return false;
+		
+		if (!wp_verify_nonce($_POST['recipe_directions_gallery_nonce'], basename(__FILE__)))
+				return false;
+		
+		if (!wp_verify_nonce($_POST['recipe_description_nonce'], basename(__FILE__)))
+			return false;
+			
+		return true;
+	}
+	
+	function save_ingredients($post_id)
+	{
+		// get me the count
 		$ingredients_count = $_POST['recipe-ingredients-count'];
 		$old_meta= get_post_meta($post_id, "recipe-ingredients", true);
-		
+
 		$arr = array();
 		for ($i=0; $i < $ingredients_count; $i++)
 		{
-	    	// get me the recipe ingredients
+		   	// get me the recipe ingredients
 			$ingredient_name = $_POST['recipe-ingredient-name_' . $i];
 			$ingredient_quantity = $_POST['recipe-ingredient-quantity_' . $i];
 			$ingredient_notes =  $_POST['recipe-ingredient-notes_'. $i];
@@ -227,16 +356,34 @@ class Recipify_post {
 			$ingredient_item["notes"] = $ingredient_notes;
 			$arr[$i] = $ingredient_item;
 		 }		
-		  $recipe_ingredient_json = json_encode($arr);
-  		  update_post_meta($post_id,'recipe-ingredients',$recipe_ingredient_json);
+		 $recipe_ingredient_json = json_encode($arr);
+	  	 update_post_meta($post_id,'recipe-ingredients',$recipe_ingredient_json);
 	}
 	
 	function save_directions($post_id)
 	{
-		if (!wp_verify_nonce($_POST['recipe_directions_nonce'], basename(__FILE__)))
-			return $post_id;
 		$recipe_directions = $_POST['recipe-directions-step'];	
-		update_post_meta($post_id, 'recipe_directions', $recipe_directions);
-		
+		update_post_meta($post_id, 'recipe_directions', $recipe_directions);	
+	
 	}
+	
+	function save_directions_gallery($post_id)
+	{
+		$directions_gallery = $_POST['recipe-directions-gallery'];
+		update_post_meta($post_id,'recipe_directions_gallery',$directions_gallery);
+	}
+	
+	function save_description($post_id)
+	{				
+		$recipe_description = $_POST['recipe_description'];
+		update_post_meta($post_id,'recipe_description', $recipe_description);
+	}
+	
+	function save_recipe_final_image($post_id)
+	{
+	 	$recipe_final_image = $_POST['recipe-final-image'];
+		update_post_meta($post_id,'recipe_final_image',$recipe_final_image);
+	}
+	
+	
 }
