@@ -19,8 +19,8 @@ add_action( 'after_setup_theme', array($recipify, 'setup'), 10 );
 /* set up custom Recipe type */
 require_once( trailingslashit(TEMPLATEPATH) . 'recipify_post.php');
 $recipify_post = new Recipify_post();
-add_action('init', array($recipify_post,'setup_scripts'));
-add_action('init', array($recipify_post,'setup'));
+add_action('init', array($recipify_post,'setup_post'));
+add_action('admin_init', array($recipify_post,'setup_scripts'));
 
 
 
@@ -37,10 +37,11 @@ class Recipify {
 		add_theme_support( 'hybrid-core-template-hierarchy' );
 		add_theme_support( 'custom-background', array( 'default-color' => 'f2f2f2' ) );
 		add_theme_support( 'cleaner-gallery' );
+	
 		
 		add_action( 'wp_enqueue_scripts', array($this,'recipify_scripts') );
 		$this->initialize_custom_header();
-		
+		register_sidebar(array('name' => 'recipify sidebar'));
 		
 	}
 

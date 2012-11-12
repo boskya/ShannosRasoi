@@ -14,12 +14,9 @@
 */
 class Recipify_post {
 	
-	function setup() {
-	  if (is_admin())
-	 {
+	function setup_post() {
 		$this->create_post_type();	
 		add_action('save_post',array($this,'save_post'))	;
-	}
 	}
 	
 	function setup_scripts()
@@ -63,7 +60,7 @@ class Recipify_post {
 		    'rewrite' => true,
 		    'capability_type' => 'post',
 			'hierarchical' => false,
-			'taxonomies' => array('category','post-tag',),
+			'taxonomies' => array('category','post_tag',),
 			'supports' => array(
 			            'title','trackbacks','comments','author'),
 			'register_meta_box_cb' => array($this,'recipe_add_meta_boxes')
@@ -72,6 +69,8 @@ class Recipify_post {
 			register_post_type('recipe',$args);		
 
 		}
+		
+	
 	
 		/*
 			add fields for recipe post type
