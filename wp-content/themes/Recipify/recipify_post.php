@@ -111,12 +111,6 @@ class Recipify_post {
 						  'normal',
 						  'high');
 						
-			add_meta_box('4recipe_directions_gallery',
-						  'Recipe Directions Photo gallery',
-						  array($this,'display_directions_gallery'),
-						  'recipe',
-						  'normal',
-						  'high');
 		}
 		
 		function display_description($object, $box)
@@ -135,27 +129,28 @@ class Recipify_post {
 			global $post;
 			?>
 			<?php wp_nonce_field(basename (__FILE__), 'recipe_ingredients_nonce'); ?>
-			<input type="hidden" name="recipe-ingredients-count" id="recipe-ingredients-count" value=0/>
 			<table id="recipe-ingredients-table">
+			<input type="hidden" name="recipe-ingredients-count" id="recipe-ingredients-count" class="recipe-table-count" value=0/>
 			 <tr>
 			   <th><label for="recipe-ingredient-name"><?php _e("Ingredient Name", 'Paneer Tikka'); ?></label></th>
-			   <th><label for="recipe-ingredient-quantity"><?php _e("Ingredient Quantity", '1 tablespoon');?></label></th>
-			   <th><label for="recipe-ingredient-quantity"><?php _e("Ingredient Notes", 'finely chopped');?></label></th>
+			   <th><label for="recipe-ingredient-quantity"><?php _e("Ingredient Quantity", '1');?></label></th>
+			   <th><label for="recipe-ingredient-measure"><?php _e("Ingredient Measure", 'tablespoon');?></label></th>
+			   <th><label for="recipe-ingredient-notes"><?php _e("Ingredient Notes", 'finely chopped');?></label></th>
 			
 			   <th></th>
 			   <th></th>
-			 </th>
+			 </tr>
 			 <?php $meta_arr = json_decode(get_post_meta($post->ID, "recipe-ingredients", true), true);
 			  if ($meta_arr)
 			  { 
 				foreach($meta_arr as $ingredient)
 				{ 
-					$this->recipe_ingredients_table($ingredient['name'],$ingredient['quantity'],$ingredient['notes']);
+					$this->recipe_ingredients_table($ingredient['name'],$ingredient['quantity'],$ingredient['measure'], $ingredient['notes']);
 				} // end for loop for ingredients
 			  } // end if there was meta value
 			  else 
 			  {
-				 $this->recipe_ingredients_table('','','','');
+				 $this->recipe_ingredients_table('','','','', '');
 			  } // end else
 			 ?>  
 				
@@ -169,20 +164,29 @@ class Recipify_post {
 				global $post;
 				?>
 				<?php wp_nonce_field(basename (__FILE__), 'recipe_directions_nonce'); ?>
-				<ol id="recipe-directions">
+				<table id="recipe-directions">
+				<input type="hidden" name="recipe-directions-count" id="recipe-directions-count" class="recipe-table-count" value=0/>				
+				
+				 <tr>
+				   <th><label for="direction-step"><?php _e("Direction step", ''); ?></label></th>
+				   <th><label for="direction-picture"><?php _e("Direction Photo", '');?></label></th>
+				   <th></th>
+				   <th></th>
+				</tr>
 				<?php 
-				$meta = get_post_meta($post->ID, "recipe_directions", true);
-				$i = 0;
+				$meta = json_decode(get_post_meta($post->ID, "recipe-directions-table", true), true);
 			    if ($meta) {  
-			        foreach($meta as $row) {   
-			        	$this->directions_list($i, $row);
-			    		$i++;  
+			        foreach($meta as $directions_row) {   
+			        	$this->directions_table($directions_row);
 			        }  
 			     } 
 				 else 
 				 { 
-					$this->directions_list(0,'');
+							$this->directions_table('');
 			     }
+				?>
+				</table>
+				<?php
 		}
 		
 		
@@ -221,7 +225,7 @@ class Recipify_post {
 			$image = get_template_directory_uri().'/img/image.png';  
 			if ($meta)
 			{
-			 	$image =  wp_get_attachment_image_src($meta, 'medium'); 
+			 	$image =  wp_get_attachment_image_src($meta, 'full'); 
 				$image = $image[0]; 
 			}
 				
@@ -232,14 +236,46 @@ class Recipify_post {
 		}
 		
 		
-		function directions_list($i, $row)
+		function directions_table($directions_row)
 		{
+				$image = get_template_directory_uri().'/img/image.png';  
+				$direction_step = "";
+				$direction_photo = "";
+				
+				if (!empty($directions_row))
+				{
+					$direction_step = $directions_row["step"];
+					$direction_photo = $directions_row["photo"];
+
+					if ($direction_photo)
+					{
+				 		$image =  wp_get_attachment_image_src($direction_photo, 'medium'); 
+						$image = $image[0]; 
+					}
+					
+				}
+				$direction_photo_src =  $image;
+				
+				?>
+					<tr class="recipe-row">
+			  			<td>		
+				     		   <textarea name="recipe-directions-step_0" id="recipe-directions-step_0" rows="4" cols="80"><?php echo $direction_step ?></textarea> 
+			  			</td>
+			  			<td>
+							<input name="recipe-directions-photo_0" id="recipe-directions-photo_0" type="hidden" class="custom_upload_image" value="<?php echo $direction_photo ?>" /> 
+							   <img src="<?php echo $direction_photo_src ?>" class="custom_preview_image" alt="" /><br /> 
+						   		<input class="custom_upload_image_button button recipe_row_button" type="button" value="Choose Image" /> 
+							     <input type="button"  class="custom_clear_image_button recipe_row_button button" value="Clear Image"/>
+						</td>
+			  			<td>
+							<input type="button" class="recipe_row_add recipe_row_button"  value="Add"/>
+			  			</td>
+			  			<td>
+							<input type="button" class="recipe_row_remove recipe_row_button" value="Remove" />
+			  			</td>		  
+		  	  		</tr>
+				 <?php
 			?>
-		       <li>
-		         <textarea name="recipe-directions-step[]" id="recipe-directions-step_<?php echo $i ?>" rows="3" cols="100"><?php echo $row ?></textarea> 
-		      	  <input type=button  class="recipe_directions_add recipe_directions_button" value="Add"/>    
-		          <input type=button  class="recipe_directions_remove recipe_directions_button" value="Remove"/>
-				</li>  
 			<?php
 		}
 
@@ -261,10 +297,10 @@ class Recipify_post {
 		}
 
 
-	function recipe_ingredients_table($name, $quantity, $notes)
+	function recipe_ingredients_table($name, $quantity, $measure, $notes)
 	{
 		?>
-			<tr class="recipe-ingredient-row">
+			<tr class="recipe-row">
 	  			<td>		
 	     			<input class="widefat" type="text" name="recipe-ingredient-name_0" id="recipe-ingredient-name_0" 
 	 					value="<?php echo $name ?>"
@@ -273,15 +309,22 @@ class Recipify_post {
 	  			<td>
 	  				<input class="widefat" type="text" name="recipe-ingredient-quantity_0" id="recipe-ingredient-quantity_0" 
 						value="<?php echo $quantity ?>"
+						size ="5" />
+	   			</td>
+	  			<td>
+	  				<input class="widefat" type="text" name="recipe-ingredient-measure_0" id="recipe-ingredient-measure_0" 
+						value="<?php echo $measure ?>"
 						size ="20" />
 	   			</td>
+	
 				<td>
 					<input class="widefat type="text" name="recipe-ingredient-notes_0" id="recipe-ingredient-notes_0" value="<?php echo $notes ?>" size="40" />
+				</td>
 	  			<td>
-					<input type="button" class="recipe_ingredient_add recipe_ingredient_button"  value="Add"/>
+					<input type="button" class="recipe_row_add recipe_row_button"  value="Add"/>
 	  			</td>
 	  			<td>
-					<input type="button" class="recipe_ingredient_remove recipe_ingredient_button" value="Remove" />
+					<input type="button" class="recipe_row_remove recipe_row_button" value="Remove" />
 	  			</td>		  
   	  		</tr>
 		 <?php
@@ -310,7 +353,6 @@ class Recipify_post {
 		$this->save_description($post_id);
 		$this->save_ingredients($post_id);
 		$this->save_directions($post_id);
-		$this->save_directions_gallery($post_id);
 		$this->save_recipe_final_image($post_id);
 	   
 	
@@ -326,9 +368,6 @@ class Recipify_post {
 
 		if (!wp_verify_nonce($_POST['recipe_directions_nonce'], basename(__FILE__)))
 			return false;
-		
-		if (!wp_verify_nonce($_POST['recipe_directions_gallery_nonce'], basename(__FILE__)))
-				return false;
 		
 		if (!wp_verify_nonce($_POST['recipe_description_nonce'], basename(__FILE__)))
 			return false;
@@ -349,10 +388,12 @@ class Recipify_post {
 			$ingredient_name = $_POST['recipe-ingredient-name_' . $i];
 			$ingredient_quantity = $_POST['recipe-ingredient-quantity_' . $i];
 			$ingredient_notes =  $_POST['recipe-ingredient-notes_'. $i];
+			$ingredient_measure = $_POST['recipe-ingredient-measure_'. $i];
 			$ingredient_item = array();
 			$ingredient_item["name"] = $ingredient_name;
 			$ingredient_item["quantity"] = $ingredient_quantity;
 			$ingredient_item["notes"] = $ingredient_notes;
+			$ingredient_item["measure"] = $ingredient_measure;
 			$arr[$i] = $ingredient_item;
 		 }		
 		 $recipe_ingredient_json = json_encode($arr);
@@ -361,16 +402,25 @@ class Recipify_post {
 	
 	function save_directions($post_id)
 	{
-		$recipe_directions = $_POST['recipe-directions-step'];	
-		update_post_meta($post_id, 'recipe_directions', $recipe_directions);	
-	
+			// get me the count
+			$directions_count = $_POST['recipe-directions-count'];
+			$old_meta= get_post_meta($post_id, "recipe-directions-table", true);
+
+			$arr = array();
+			for ($i=0; $i < $directions_count; $i++)
+			{
+			   	// get me the recipe directions
+				$direction_step = $_POST['recipe-directions-step_' . $i];
+				$direction_photo = $_POST['recipe-directions-photo_' . $i];
+				$direction_item = array();
+				$direction_item["step"] = $direction_step;
+				$direction_item["photo"] = $direction_photo;
+				$arr[$i] = $direction_item;
+			 }		
+			 $directions_json = json_encode($arr);
+		  	 update_post_meta($post_id,'recipe-directions-table',$directions_json);
 	}
 	
-	function save_directions_gallery($post_id)
-	{
-		$directions_gallery = $_POST['recipe-directions-gallery'];
-		update_post_meta($post_id,'recipe_directions_gallery',$directions_gallery);
-	}
 	
 	function save_description($post_id)
 	{				

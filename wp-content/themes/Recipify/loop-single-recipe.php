@@ -2,7 +2,7 @@
 
  	<!-- Display the date (November 16th, 2009 format) and a link to other posts by this posts author. -->
  		
-		<!-- Recipe using hrecipe micrformats -->
+		<!-- Recipe using microdata -->
  		<article class="recipe" itemscope itemtype="http://schema.org/Recipe">
 			<div>
 			  <?php $final_image = get_post_meta($post->ID, 'recipe_final_image', true); 
@@ -10,7 +10,7 @@
 				{
 			 	?>
 				<div class="photo">
-					<img itemprop="photo" src="<?php echo wp_get_attachment_image_src($final_image,'full')[0]; ?>" alt="">
+					<img itemprop="photo" src="<?php echo wp_get_attachment_image_src($final_image,'full')[0]; ?>" alt="" />
 				</div>
 				<?php } ?>
 				<div class="description-block"> 
@@ -57,17 +57,30 @@
 			
 			<section class="instructions">
 			 <h3>Instructions</h3>
-			 <?php $instructions = get_post_meta($post->ID, "recipe_directions", true); ?>
+				 <?php $instructions =  json_decode(get_post_meta($post->ID, "recipe-directions-table", true), true); ?>
 			  <?php if ($instructions)
 				{
 			  ?>
-					<ol itemprop="instructions">
-					<?php foreach($instructions as $instruction) 
+					<div itemprop="instructions" class="instructions-content">
+					<?php foreach($instructions as $index=>$instruction) 
 					{
+						$direction_step = $instruction['step'];
+						$direction_photo = $instruction['photo'];
+					
 					?>
-						<li><?php echo apply_filters('the_content',$instruction) ?></li>
+						<div class="instruction clearfix">
+							<h4> Step <?php echo $index + 1 ?></h4>
+								<div class="instruction-step"><?php echo $direction_step ?></div>
+								<?php if ($direction_photo)
+								{
+									?>
+								<div class="instruction-photo">
+									<img src="<?php echo wp_get_attachment_image_src($direction_photo,'medium')[0]; ?>" />
+								</div>
+							</div>
+							<?php } ?>
 					<?php } ?>
-					</ul>
+					</div>
 				<?php } ?>
 			</section>
  		</article>

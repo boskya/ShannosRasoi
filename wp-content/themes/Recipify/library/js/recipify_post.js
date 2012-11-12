@@ -3,75 +3,51 @@
 */
 jQuery(function(jQuery) { 
 	
+	var recipeRow = "tr.recipe-row";
+	
 	/*
 	* On ready make sure indexes are lined up
 	*/
 	jQuery(document).ready(function() {
-		resetIndexes("#recipe-ingredients-table tr.recipe-ingredient-row");
-		toggleDirectionsRemove();
+		resetIndexes("#recipe-ingredients-table");
+		resetIndexes("#recipe-directions");
 	} );
 	
 	/*
 	*  On add row of recipe_ingredient
 	*/
-    jQuery('.recipe_ingredient_add').click(function() {  
-		var rows = jQuery("#recipe-ingredients-table tr.recipe-ingredient-row");
+    jQuery('.recipe_row_add').click(function() {  
+		var rows = jQuery(this).closest("table").find(recipeRow);
 		var insertLocation = jQuery(this).closest("tr");
 		var clonedRow = jQuery(insertLocation).clone(true);
-		clonedRow.find("input").not("input.recipe_ingredient_button").each(function() {
+		clonedRow.find("input, textarea").not("input.recipe_row_button").each(function() {
 		    jQuery(this).attr({
 		      'value': ''               
 		    });
 		  }).end();
 		clonedRow.insertAfter(jQuery(insertLocation));
-		resetIndexes("#recipe-ingredients-table tr.recipe-ingredient-row");
+		resetIndexes(jQuery(this).closest("table"));
          }); //add function
  
     /*
 	 * On remove row of recipe_ingredient
 	*/
-    jQuery('.recipe_ingredient_remove').click(function() {
+    jQuery('.recipe_row_remove').click(function() {
+		var table = jQuery(this).closest("table");
 		var removeLocation = jQuery(this).closest("tr");
 		removeLocation.remove();
-		resetIndexes("#recipe-ingredients-table tr.recipe-ingredient-row");
+		resetIndexes(table);
 	});
 	
-	/*
-	 * On add of directions
-	*/
-	jQuery('.recipe_directions_add').click(function() {
-		var insertLocation = jQuery(this).closest("li");
-		var clonedItem = jQuery(insertLocation).clone(true);
-		clonedItem.find("input").not("input.recipe_directions_button").each(function() {
-			jQuery(this).attr({
-				'value': ''
-			});
-		});
-		clonedItem.insertAfter(jQuery(insertLocation));		
-		toggleDirectionsRemove();
-		
-	});
-	
-	jQuery('.recipe_directions_remove').click(function()
-	{	
-		jQuery(this).closest("li").remove();				
-		toggleDirectionsRemove();
-	});
-	
-	
-	function toggleDirectionsRemove()
-	{
-		jQuery("#recipe_directions li input.recipe_directions_remove").show();
-		jQuery("#recipe_directions li:first input.recipe_directions_remove").hide();
-	}
 	
 	/*
 	* reset the id's and names of the elements on each row and update the total counts
 	*/
-	function resetIndexes(rows){
+	function resetIndexes(table){
+		  var rows = jQuery(table).find(recipeRow); 
 		  jQuery(rows).each(function(index, rowElement) {   // And all inner elements.
-			jQuery(rowElement).find("input.recipe_ingredient_remove").show();			
-			jQuery(rowElement).find("input").each(function(colIndex, colElement)
+			jQuery(rowElement).find("input.recipe_row_remove").show();			
+			jQuery(rowElement).find("input, textarea").each(function(colIndex, colElement)
 			 {
 				if(colElement.id)
 				{
@@ -91,9 +67,9 @@ jQuery(function(jQuery) {
 			if (jQuery(rows).length == 1)
 			{
 				// hide the remove button
-				jQuery(rows).first().find("input.recipe_ingredient_remove").hide();
+				jQuery(rows).first().find("input.recipe_row_remove").hide();
 			}
-			jQuery("input#recipe-ingredients-count").attr({'value' : jQuery(rows).length });
+			jQuery(table).find("input.recipe-table-count").attr({'value' : jQuery(rows).length });
 			
 		}
 		
