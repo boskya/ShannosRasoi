@@ -15,6 +15,8 @@ $theme = new Hybrid();
 /* set up the recipify theme */
 $recipify = new Recipify();
 add_action( 'after_setup_theme', array($recipify, 'setup'), 10 );
+add_action( 'parse_query',array($recipify,'changept' ));
+
 
 /* set up custom Recipe type */
 require_once( trailingslashit(TEMPLATEPATH) . 'recipify_post.php');
@@ -23,6 +25,24 @@ add_action('init', array($recipify_post,'setup_post'));
 add_action('admin_init', array($recipify_post,'setup_scripts'));
 
 
+
+
+function recipify_content_nav( $nav_id ) {
+	global $wp_query;
+
+		if ( function_exists( 'wp_paginate' ) ) {
+			wp_paginate();
+		}
+		else {
+			if ( $wp_query->max_num_pages > 1 ) : ?>
+				<nav id="<?php echo $nav_id; ?>">
+					<h3 class="assistive-text"><?php _e( 'Post navigation', 'twentyeleven' ); ?></h3>
+					<div class="nav-previous"><?php next_posts_link( __( '<span class="meta-nav">&larr;</span> Older posts', 'twentyeleven' ) ); ?></div>
+					<div class="nav-next"><?php previous_posts_link( __( 'Newer posts <span class="meta-nav">&rarr;</span>', 'twentyeleven' ) ); ?></div>
+				</nav><!-- #nav-above -->
+			<?php endif;
+		}
+}
 
 class Recipify {
 
@@ -43,6 +63,18 @@ class Recipify {
 		$this->initialize_custom_header();
 		register_sidebar(array('name' => 'recipify sidebar'));
 		
+	}
+
+	/*
+	*  Ensures recipe shows up in category pages and sets default number of posts per page to 6
+	*/
+	function changept() {
+		if( is_category() && !is_admin() )
+		{
+			set_query_var( 'post_type', array( 'recipe' ) );
+			set_query_var('posts_per_page','6');
+		}
+		return;
 	}
 
 	/*

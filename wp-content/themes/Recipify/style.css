@@ -36,6 +36,12 @@ body { font-size:14px; line-height: 1.5em; font-family:Verdana, Geneva, sans-ser
 	float:left;
 }
 
+#main.full-width
+{
+	width: 100%;
+	margin: 0px auto;
+}
+
 #main.with-sidebar
 {
 	width:70%;
@@ -52,6 +58,11 @@ header[role=banner]
 	padding:10px;
 }
 
+header[role=banner] a
+{
+	text-decoration:none;
+}
+
 #site-tagline
 {
 	font-size:14px;
@@ -61,22 +72,22 @@ header[role=banner]
 	margin-top:0;
 }
 
-header[role=banner] #searchform {
-		position:absolute;
-		right:30px;
-		top:30px;
-	}
+header[role=banner] #searchform 
+{
+	float:right;
+	margin-top: -100px;
+}
 	
 header[role=banner] #searchform label,
 header[role=banner] #searchform input[type=submit]{
-		display:none;
+	display:none;
 }
 	
 header[role=banner] #s {
 	font-size:1.3em;
 	background:url(library/images/icon-search.png) no-repeat 7px 10px #f2f2f2;
 	padding:7px 10px 7px 30px;
-	min-width:270px;
+	width:80%;
 	outline:none;
 }
 	
@@ -91,13 +102,15 @@ header[role=banner] #s {
 	margin-bottom:-6px;
 }
 
-/*Navigation Styles*/
-nav[role=navigation] {
+/* Navigation Styles */
+
+nav[role=navigation] 
+{
 	 background-color: #363535;	 	
 	 box-shadow:inset 0 2px 0 #000; 
 	 padding:5px;	 
 	 margin:-10px;
-	float:right;
+	 float:right;
 	
 }
 	
@@ -178,14 +191,63 @@ nav[role=navigation] ul.menu li ul.sub-menu li:hover a{
 	text-decoration: underline;
 }
 
+
 /* Content Styles */
 #content
 {
-  margin: 1em;
+  margin: 1em auto;
   min-height: 100px;
   width: 97%;
 }
 
+.recipe-collection
+{
+	width: 98%;
+	margin: 2% auto;
+}
+
+
+#content h3
+{
+	color: #F7692D;;
+}
+
+.recipe-collection-item
+{
+	border: 0.1em solid;
+	border-radius: 10px;
+	box-shadow: 2px 2px 5px #888888;;
+	width: 300px;
+	height: 300px;
+	display:inline-block;
+	margin: 0.4em;	
+
+}
+
+.recipe-collection-item img
+{
+	border-radius: 10px 10px 10px 10px;
+	width: 100%;
+	height: 100%;
+}
+
+.recipe-collection-item .title
+{
+	width: 290px;
+	padding: 5px;
+	line-height: 1.3em;
+	z-index: 10;
+	background: rgba(32, 32, 32, .5);
+	border: none;
+	color: white;
+	height: 30px;
+	position:relative;
+	top: -40px;
+	border-radius: 0px 0px 10px 10px;
+
+
+}
+/* single recipe styles */
 .recipe
 {
 	padding: 1em;
@@ -221,6 +283,7 @@ nav[role=navigation] ul.menu li ul.sub-menu li:hover a{
 {
 	margin-top: 1em;
 }
+
 
 .ingredients ul
 {
@@ -381,3 +444,144 @@ SIDEBARS & ASIDES
 .post_content .widgettitle {
 		font-family:Georgia, "Times New Roman", Times, serif;
 }
+
+
+/******************************************************************
+MEDIA QUERIES & DEVICE STYLES
+Developed by: Andy Clarke & the 320 & Up Extension
+URL: http://stuffandnonsense.co.uk/projects/320andup/
+******************************************************************/
+
+@media screen and (max-width: 480px) {
+	header[role=banner] 
+	{
+		position: relative;
+		background: #000;
+		padding:10px;
+		text-align:center;
+	}
+
+	header[role=banner] #searchform 
+	{
+		display:none;
+	}
+}
+
+@media screen and (max-width: 768px) {
+
+	header[role=banner] #searchform 
+	{
+		display:none;
+	}
+	/* Navigation Styles */
+
+	nav[role=navigation] 
+	{
+	 	 box-shadow:none;
+	 	 background: none;
+	 	 margin:0;
+	 	 padding:0;
+	 	 width:50%;
+	 	 max-width:200px;
+	 	 float:left;
+	
+	}
+	
+	nav[role=navigation] ul { 
+			list-style: none;
+			display: table;
+			text-align: center;	
+	}
+
+
+	nav[role=navigation] ul.menu li{ 
+		background-color: #363535;	 	
+		list-style: none;
+		display: table-row;
+		float:left;
+		font-size:1.8em;
+		padding-top:0.2em;
+		padding-bottom:0.2em;
+		margin-left:0px;
+		width:100%;
+		text-align:center;
+		box-shadow:0 0 5px #e6e6e6 inset;	
+
+	}
+
+	nav[role=navigation] ul.menu li a, nav[role=navigation] .menu #menu-icon { 
+		padding: 20px 20px 9px 20px;
+	color:#fff;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:11px;
+	text-transform:uppercase;	
+	letter-spacing:1px;
+	text-decoration:none;
+}
+
+ul.menu:after { 
+	visibility: hidden; 
+	display: block; 
+	font-size: 0; 
+	content: " "; 
+	clear: both; 
+	height: 0; 
+}
+
+
+nav[role=navigation] .menu #menu-icon {
+	cursor:pointer;
+	display:none;
+}
+
+
+nav[role=navigation] ul.menu li > ul.sub-menu {
+	left: -9999em;
+	transition: height .2s ease-in-out;
+}
+
+nav[role=navigation] ul.menu li:hover ul.sub-menu {
+	height: 98px;
+	display:inline;
+	left:auto;
+}
+
+
+nav[role=navigation] ul.menu li ul.sub-menu
+{
+	position: relative;
+	left: auto;
+	z-index: 9999;
+	width: 200px;
+	word-wrap: break-word;
+	height:0px;
+	display:none;
+}
+
+nav[role=navigation] ul.menu>li:hover>a {
+	background:none;
+}
+		
+nav[role=navigation] ul.menu li ul.sub-menu li a { 
+	color:#555; 
+	text-shadow:0px 0px; 
+	padding:0px;
+}
+
+
+nav[role=navigation] ul.menu li ul.sub-menu li,
+nav[role=navigation] ul.menu li ul.children li{
+	border-bottom:1px solid #f0f0f0;
+	width:200px;
+	background: #FAFAFA;
+	box-shadow:none;
+	/*box-shadow: 1px 1px 3px #AAA;*/
+	padding:0;
+}
+	
+nav[role=navigation] ul.menu li ul.sub-menu li:hover a{
+	text-decoration: none;
+}
+
+}
+
