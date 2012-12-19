@@ -247,6 +247,68 @@ nav[role=navigation] ul.menu li ul.sub-menu li:hover a{
 
 
 }
+
+#recipe-nav
+{
+	width: 100%;
+	margin-left: 90%;
+}
+
+/* page navigation */
+
+#recipe-nav a span
+{
+	background: #363535;
+	border-right: solid 1px rgba(79, 79, 79, 0.75);
+	border-top: solid 1px rgba(79, 79, 79, 0.75);
+		-webkit-border-top-left-radius: 6px;
+		-webkit-border-bottom-right-radius: 6px;
+	height: 20px;
+	width: 20px;
+	-webkit-transform: rotate(45deg);	
+}
+
+#recipe-nav div.nav-next a span
+{
+	-webkit-mask-image: -webkit-gradient(linear, right top, left bottom, from(#000000), color-stop(0.5,#000000), color-stop(0.5, transparent), to(transparent));
+	-webkit-background-clip: content;
+	position: absolute;
+	left: 38px;
+	top: 2px;
+
+}
+
+#recipe-nav div.nav-previous a span
+{
+
+	-webkit-mask-image: -webkit-gradient(linear, left bottom, right top, 
+		from(#000000), 
+		color-stop(0.5,#000000), 
+		color-stop(0.5, transparent), 
+		to(transparent));
+			position: absolute;
+	left: -8px;
+	top: 2px;
+	-webkit-background-clip: content;
+}
+
+
+#recipe-nav a
+{
+	text-decoration: none;
+	color: #fff;
+	display: inline-block;
+	padding: 4px 10px;
+	-webkit-border-radius: 5px;
+	font: normal 14px/16px Helvetica, Arial, sans-serif;
+	border: solid 1px rgba(79, 79, 79, 0.75);
+	position: relative;
+	padding-right: 5px;
+	margin-right: 8px;
+	background: #363535;
+
+}
+
 /* single recipe styles */
 .recipe
 {

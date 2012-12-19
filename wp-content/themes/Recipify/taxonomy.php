@@ -26,20 +26,19 @@
 
         		<div class="recipe-collection">
 	       		<?php while ( have_posts() ) : the_post(); ?>
-       				<div class="recipe-collection-item">
-
+       				<div class="recipe-collection-item">      					
 					  <?php $final_image = get_post_meta($post->ID, 'recipe_final_image', true); 
 						if ($final_image)
 						{
 					 	?>
-							<img itemprop="photo" src="<?php echo wp_get_attachment_image_src($final_image,'fulll')[0]; ?>" alt="" />
+						 	<a href="<?php echo get_permalink( $id ); ?>"><img itemprop="photo" src="<?php echo wp_get_attachment_image_src($final_image,'fulll')[0]; ?>" alt="" /></a>
 						<?php } ?>
 
 						<div class="title"><?php the_title(); ?></div>
 					</div>	
 				<?php endwhile; // end of the loop. ?>
-				<?php recipify_content_nav("navbelow") ?>
-				</div>
+				<?php recipify_content_nav("recipe-nav") ?>
+					</div>
 			 <?php else: ?>
 
 			 <!-- The very first "if" tested to see if there were any Posts to -->

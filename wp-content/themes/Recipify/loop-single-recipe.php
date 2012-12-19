@@ -8,7 +8,7 @@
 			  <?php $final_image = get_post_meta($post->ID, 'recipe_final_image', true); 
 				if ($final_image)
 				{
-			 	?>
+			 	?>			 	
 				<div class="photo">
 					<img itemprop="photo" src="<?php echo wp_get_attachment_image_src($final_image,'full')[0]; ?>" alt="" />
 				</div>

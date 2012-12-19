@@ -25,24 +25,36 @@ add_action('init', array($recipify_post,'setup_post'));
 add_action('admin_init', array($recipify_post,'setup_scripts'));
 
 
-
-
+/**
+ * Display navigation to next/previous pages when applicable
+ */
 function recipify_content_nav( $nav_id ) {
 	global $wp_query;
 
-		if ( function_exists( 'wp_paginate' ) ) {
-			wp_paginate();
-		}
-		else {
-			if ( $wp_query->max_num_pages > 1 ) : ?>
-				<nav id="<?php echo $nav_id; ?>">
-					<h3 class="assistive-text"><?php _e( 'Post navigation', 'twentyeleven' ); ?></h3>
-					<div class="nav-previous"><?php next_posts_link( __( '<span class="meta-nav">&larr;</span> Older posts', 'twentyeleven' ) ); ?></div>
-					<div class="nav-next"><?php previous_posts_link( __( 'Newer posts <span class="meta-nav">&rarr;</span>', 'twentyeleven' ) ); ?></div>
-				</nav><!-- #nav-above -->
-			<?php endif;
-		}
+	?>
+	<nav id="<?php echo $nav_id; ?>">
+
+	<?php if ( is_single() ) : // navigation links for single posts ?>
+
+		<?php previous_post_link( '<div class="nav-previous">%link</div>', '<span class="meta-nav">' . _x( '&larr;', 'Previous post link', 'recipify' ) . '</span> Previous' ); ?>
+		<?php next_post_link( '<div class="nav-next">%link</div>', 'Next <span class="meta-nav">' . _x( '&rarr;', 'Next post link', 'recipify' ) . '</span>' ); ?>
+
+		<?php elseif ( $wp_query->max_num_pages > 1 && ( is_home() || is_archive() || is_search()  || is_category()) ) : // navigation links for home, archive, and search pages ?>
+
+		<?php if ( get_next_posts_link() ) : ?>
+		<div class="nav-next"><?php next_posts_link( __( 'NEXT<span></span>', 'recipify' ) ); ?></div>
+		<?php endif; ?>
+
+		<?php if ( get_previous_posts_link() ) : ?>
+		<div class="nav-previous"><?php previous_posts_link( __( '<span></span>PREVIOUS', 'recipify' ) ); ?></div>
+		<?php endif; ?>
+
+	<?php endif; ?>
+
+	</nav><!-- #<?php echo $nav_id; ?> -->
+	<?php
 }
+
 
 class Recipify {
 
@@ -51,10 +63,14 @@ class Recipify {
 	*/
 	function setup(){	
 
+		// add hybrid defaults
+
 		$prefix = hybrid_get_prefix();
 		
 		add_theme_support( 'hybrid-core-menus', array( 'primary'));
 		add_theme_support( 'hybrid-core-template-hierarchy' );
+		add_theme_support( 'loop-pagination' );
+
 		add_theme_support( 'custom-background', array( 'default-color' => 'f2f2f2' ) );
 		add_theme_support( 'cleaner-gallery' );
 	
