@@ -43,13 +43,46 @@ query_posts("post_type=recipe&&meta_key=_jsFeaturedPost&meta_value=yes");
 
 
 		$index++;
-	endwhile; // end of the loop. ?>
-</div>
-</div>
-</div>
-<?php wp_reset_query();
+	endwhile; // end of the loop. 
+	wp_reset_query();
 
-?>
+	?>
+
+	</div>
+</div>
+	<aside id='profile' class="widget">
+	<h2 class="widget-title">About me</h2>
+	<?php
+		$attachments = get_children( array(
+                'post_parent' => $post->ID,
+                'post_type' => 'attachment',
+                'post_mime_type' => 'image',
+                'order' => 'ASC',
+                'orderby' => 'menu_order'
+            ) );
+
+	    /**
+    	 * Loop through each attachment
+    	 */
+    	foreach ( $attachments as $id  => $attachment ) :
+    	?><?php	
+        	$title = esc_html( $attachment->post_title, 1 );
+        	if ($title == 'ShannoProfile')
+        	{
+	        	$img = wp_get_attachment_image_src( $id, "medium" );
+	        	?>
+	 	    		<img src="<?php echo esc_url( $img[0] ) ?>" alt="<?php echo esc_attr( $title ) ?>" /><br/><br/>
+	 	    			        		Hi, I am Shanno. My site features home style indian food recipes. 
+
+	 	    	<?php
+	         break;
+	        }
+    	endforeach;
+    	?>
+		<aside>
+</div>
+
+
 <script>
 (function($)
 {
@@ -84,11 +117,11 @@ query_posts("post_type=recipe&&meta_key=_jsFeaturedPost&meta_value=yes");
 
         if (position < 0.5)
         {
-        	scrollTopPosition = '-=30px';
+        	scrollTopPosition = '-=40px';
         }
         else
         {
-        	scrollTopPosition = '+=30px';
+        	scrollTopPosition = '+=40px';
         }
 
 		$(this).stop().animate({ scrollTop: scrollTopPosition });
