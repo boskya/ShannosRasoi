@@ -30,8 +30,9 @@
 					  <?php $final_image = get_post_meta($post->ID, 'recipe_final_image', true); 
 						if ($final_image)
 						{
+							$final_image_src = wp_get_attachment_image_src($final_image,'full');
 					 	?>
-						 	<a href="<?php echo get_permalink( $id ); ?>"><img itemprop="photo" src="<?php echo wp_get_attachment_image_src($final_image,'fulll')[0]; ?>" alt="" /></a>
+						 	<a href="<?php echo get_permalink( $id ); ?>"><img itemprop="photo" src="<?php echo $final_image_src[0]; ?>" alt="" /></a>
 						<?php } ?>
 
 						<div class="title"><?php the_title(); ?></div>

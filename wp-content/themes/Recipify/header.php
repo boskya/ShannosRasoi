@@ -24,7 +24,7 @@
 	<header id="banner" role="banner">
 
 		 <a href="<?php echo home_url( '/' ); ?>" rel="home" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>">
-			<img src="<?php header_image(); ?>" width="300" alt="<?php bloginfo( 'name' ); ?>" />
+			<img src="<?php header_image(); ?>" id="headerimg" alt="<?php bloginfo( 'name' ); ?>" />
 					<h2 id="site-tagline"><?php bloginfo( 'description' ); ?></h2>
 
 		</a>

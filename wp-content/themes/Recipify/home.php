@@ -18,7 +18,8 @@ query_posts("post_type=recipe&&meta_key=_jsFeaturedPost&meta_value=yes");
 	while ( have_posts() ) : the_post();
 		$class = "slide-thumb";
 		$final_image = get_post_meta($post->ID, 'recipe_final_image', true); 
-		$final_image_src = wp_get_attachment_image_src($final_image,'fulll')[0]; 
+		$final_image_src = wp_get_attachment_image_src($final_image,'full');
+		$final_image_src = $final_image_src[0];
 		$title = get_the_title();
 
 		if ($index == 0)

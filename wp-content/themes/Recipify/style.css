@@ -19,7 +19,16 @@ accessibility
      left: -1000em;
 }
 
-body { font-size:14px; line-height: 1.5em; font-family:Verdana, Geneva, sans-serif; } 
+body { 
+	font-size:14px; line-height: 1.5em; 
+	font-family:Verdana, Geneva, sans-serif; 
+} 
+
+body.custom-background
+{
+	background-size: 400px 400px;
+
+}
 
 a { text-decoration: none;}
 
@@ -28,11 +37,10 @@ a { text-decoration: none;}
 	width:95%;
 	margin: 20px auto;
 	max-width: 1000px;
-	border:1px solid #c1c1c1;
-	background: #fff;
+	border:1px solid #B26B00;
+	background: #FFFAE6;
 	box-shadow:0 0 5px #e6e6e6 inset;	
 }
-
 
 #main.full-width
 {
@@ -45,7 +53,7 @@ a { text-decoration: none;}
 	width:70%;
 	display: inline-block;
 	vertical-align: top;
-	margin: 0.8em;
+	margin: 1%;
 
 }
 
@@ -57,7 +65,12 @@ header[role=banner]
 {
 	position: relative;
 	background: #000;
-	padding:10px;
+	padding:1%;
+	background:url("chillies.png") black;
+	background-repeat:no-repeat;
+	background-position:right;
+	background-size:50%;
+	width:98%;
 }
 
 header[role=banner] a
@@ -67,17 +80,12 @@ header[role=banner] a
 
 #site-tagline
 {
-	font-size:14px;
+	font-size: 0.9em;
 	color:#afafaf;
-	padding-bottom:10px;
+	padding-bottom:1%;
 	text-transform: uppercase;
 	margin-top:0;
-}
-
-header[role=banner] #searchform 
-{
-	float:right;
-	margin-top: -100px;
+	width:40%;
 }
 	
 header[role=banner] #searchform label,
@@ -86,32 +94,34 @@ header[role=banner] #searchform input[type=submit]{
 }
 	
 header[role=banner] #s {
-	font-size:1.3em;
-	background:url(library/images/icon-search.png) no-repeat 7px 10px #f2f2f2;
+	font-size:1.0em;
+	background:url(library/images/icon-search.png) no-repeat 7px 10px rgba(255, 255, 255, 0.8);
 	padding:7px 10px 7px 30px;
-	width:80%;
+	width:75%;
 	outline:none;
+	border:0px;
 }
 	
 #headerimg { 
-	border:10px solid #fff; 
-	margin-bottom:20px; 
-}
-	
-#headerimg img {
-	width:100%;
-	height:auto;
-	margin-bottom:-6px;
+		width:30%;
+
 }
 
+nav[role=search]
+{
+	float:right;
+	width:30%;
+	margin-top:-10%;
+	margin-right:0;
+}
 /* Navigation Styles */
 
 nav[role=navigation] 
 {
 	 background-color: #363535;	 	
 	 box-shadow:inset 0 2px 0 #000; 
-	 padding:5px;	 
-	 margin:-10px;
+	 padding:0.8%;	 
+	 margin-top:-1%;
 	 float:right;
 	 
 }
@@ -209,18 +219,15 @@ nav[role=navigation] ul.menu li ul.sub-menu li:hover a{
 	padding: 2%;
 	height: 400px;
 	overflow:hidden;
-	border: 1px solid #666;
-	background:#FAFAFA;
 	border-radius:15px;
 }
 
 .slide-main
 {
-	width: 70%;
+	width: 80%;
 	display:inline-block;
 	height: 100%;
 	vertical-align: top;
-	border: 1px solid #666;
 	padding:0;
 	margin:0;
 }
@@ -249,11 +256,10 @@ nav[role=navigation] ul.menu li ul.sub-menu li:hover a{
 
 .slide-thumbs-container
 {
-	width:28%;
+	width:18%;
 	overflow:hidden;
-	height: 400px;
+	height: 100%;
 	display:inline-block;
-	border: 1px solid #666;
 }
 
 .slide-thumbs
@@ -269,7 +275,7 @@ nav[role=navigation] ul.menu li ul.sub-menu li:hover a{
 .slide-thumb
 {
 	width: 100%;
-	height: 25%;
+	height: 20%;
 	border-bottom: 1px solid #666;
 	cursor:pointer;
 }
@@ -612,27 +618,22 @@ Developed by: Andy Clarke & the 320 & Up Extension
 URL: http://stuffandnonsense.co.uk/projects/320andup/
 ******************************************************************/
 
-@media screen and (max-width: 480px) {
+
+
+@media screen and (max-width: 780px) {
 	header[role=banner] 
 	{
 		position: relative;
-		background: #000;
-		padding:10px;
+		padding:1%;
 		text-align:center;
 	}
 
-	header[role=banner] #searchform 
+	header[role=banner] div
 	{
-		display:none;
+		width: 100%;
 	}
-}
 
-@media screen and (max-width: 768px) {
 
-	header[role=banner] #searchform 
-	{
-		display:none;
-	}
 	/* Navigation Styles */
 
 	nav[role=navigation] 
@@ -641,9 +642,7 @@ URL: http://stuffandnonsense.co.uk/projects/320andup/
 	 	 background: none;
 	 	 margin:0;
 	 	 padding:0;
-	 	 width:50%;
-	 	 max-width:200px;
-	 	 float:left;
+	 	 width:98%;
 	
 	}
 	
@@ -651,97 +650,173 @@ URL: http://stuffandnonsense.co.uk/projects/320andup/
 			list-style: none;
 			display: table;
 			text-align: center;	
+			width:100%;			
 	}
 
 
 	nav[role=navigation] ul.menu li{ 
 		background-color: #363535;	 	
 		list-style: none;
-		display: table-row;
+		display: inline-block;
 		float:left;
 		font-size:1.8em;
 		padding-top:0.2em;
 		padding-bottom:0.2em;
-		margin-left:0px;
-		width:100%;
+		margin:0px;
+		width:33.3%;
 		text-align:center;
 		box-shadow:0 0 5px #e6e6e6 inset;	
 
 	}
 
+	nav[role=navigation] ul.menu li:last-child, li:nth-last-child(odd){ 
+		width:100%;
+
+	}
+
 	nav[role=navigation] ul.menu li a, nav[role=navigation] .menu #menu-icon { 
 		padding: 20px 20px 9px 20px;
-	color:#fff;
-	font-family:Verdana, Geneva, sans-serif;
-	font-size:11px;
-	text-transform:uppercase;	
-	letter-spacing:1px;
-	text-decoration:none;
-}
+		color:#fff;
+		font-family:Verdana, Geneva, sans-serif;
+		font-size:1.8em;
+		text-transform:uppercase;	
+		letter-spacing:1px;
+		text-decoration:none;
+	}
 
-ul.menu:after { 
-	visibility: hidden; 
-	display: block; 
-	font-size: 0; 
-	content: " "; 
-	clear: both; 
-	height: 0; 
-}
+	ul.menu:after { 
+		visibility: hidden; 
+		display: block; 
+		font-size: 0; 
+		content: " "; 
+		clear: both; 
+		height: 0; 
+	}
 
-
-nav[role=navigation] .menu #menu-icon {
-	cursor:pointer;
-	display:none;
-}
-
-
-nav[role=navigation] ul.menu li > ul.sub-menu {
-	left: -9999em;
-	transition: height .2s ease-in-out;
-}
-
-nav[role=navigation] ul.menu li:hover ul.sub-menu {
-	height: 98px;
-	display:inline;
-	left:auto;
-}
+	nav[role=navigation] .menu #menu-icon {
+		cursor:pointer;
+		display:none;
+	}
 
 
-nav[role=navigation] ul.menu li ul.sub-menu
-{
-	position: relative;
-	left: auto;
-	z-index: 9999;
-	width: 200px;
-	word-wrap: break-word;
-	height:0px;
-	display:none;
-}
+	nav[role=navigation] ul.menu li > ul.sub-menu {
+		left: -9999em;
+		transition: height .2s ease-in-out;
+	}
 
-nav[role=navigation] ul.menu>li:hover>a {
-	background:none;
-}
+	nav[role=navigation] ul.menu li:hover ul.sub-menu {
+		display:inline;
+		left:auto;
+	}
+
+
+	nav[role=navigation] ul.menu li ul.sub-menu
+	{
+		position: relative;
+		left: auto;
+		z-index: 9999;
+		width: 100%
+		word-wrap: break-word;
+		height:0px;
+		display:none;
+	}
+
+	nav[role=navigation] ul.menu>li:hover>a {
+		background:none;
+	}
 		
-nav[role=navigation] ul.menu li ul.sub-menu li a { 
-	color:#555; 
-	text-shadow:0px 0px; 
-	padding:0px;
-}
+	nav[role=navigation] ul.menu li ul.sub-menu li a { 
+		color:#555; 
+		text-shadow:0px 0px; 
+		padding:0px;
+	}
 
-
-nav[role=navigation] ul.menu li ul.sub-menu li,
-nav[role=navigation] ul.menu li ul.children li{
-	border-bottom:1px solid #f0f0f0;
-	width:200px;
-	background: #FAFAFA;
-	box-shadow:none;
-	/*box-shadow: 1px 1px 3px #AAA;*/
-	padding:0;
-}
+	nav[role=navigation] ul.menu li ul.sub-menu li,
+	nav[role=navigation] ul.menu li ul.children li{
+		border-bottom:1px solid #f0f0f0;
+		width:200px;
+		background: #FAFAFA;
+		box-shadow:none;
+		padding:0;
+	}
 	
-nav[role=navigation] ul.menu li ul.sub-menu li:hover a{
-	text-decoration: none;
+	nav[role=navigation] ul.menu li ul.sub-menu li:hover a{
+		text-decoration: none;
+	}
+
+	#site-tagline
+	{
+		font-size: 0.8em;
+		color:#afafaf;	
+		padding-bottom:1%;
+		text-transform: uppercase;
+		margin-top:0;
+		width:100%;
+		display:block;
+	}
+
+	
+	nav[role=navigation] ul.menu li a{ 
+		font-size:0.4em;
+
+	}
+	nav[role=navigation] ul.menu li ul.sub-menu li { 
+		font-size:1em;
+
+	}
+
+	header[role=banner] #s {
+		font-size:1.0em;
+		background:url(library/images/icon-search.png) no-repeat 7px 10px rgba(59, 38, 32, 0.8);	
+		padding:7px 10px 7px 30px;
+		width:75%;
+		outline:none;
+		border:0px;
+	}
+	
+	#headerimg { 
+		width:40%;
+	}
+
+	nav[role=search]
+	{
+		width:100%;
+		display:inline-block;
+		float:none;
+		padding-bottom:10px;
+	}
+	#main.with-sidebar
+	{
+		width:100%;
+		display: inline-block;
+		vertical-align: top;
+		margin: 1%;
+
+	}
+
+	#profile {
+		width:100%;
+	}
 }
 
+@media screen and (max-width: 480px) {
+
+
+	#site-tagline
+	{
+		font-size: 0.8em;
+		color:#afafaf;	
+		padding-bottom:1%;
+		text-transform: uppercase;
+		margin-top:0;
+		width:100%;
+		display:block;
+	}
+
+
 }
+
+
+
+
 

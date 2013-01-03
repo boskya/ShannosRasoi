@@ -8,9 +8,10 @@
 			  <?php $final_image = get_post_meta($post->ID, 'recipe_final_image', true); 
 				if ($final_image)
 				{
+					$final_image_src = wp_get_attachment_image_src($final_image,'full');
 			 	?>			 	
 				<div class="photo">
-					<img itemprop="photo" src="<?php echo wp_get_attachment_image_src($final_image,'full')[0]; ?>" alt="" />
+					<img itemprop="photo" src="<?php echo $final_image_src[0]; ?>" alt="" />
 				</div>
 				<?php } ?>
 				<div class="description-block"> 
@@ -73,9 +74,10 @@
 								<div class="instruction-step"><?php echo $direction_step ?></div>
 								<?php if ($direction_photo)
 								{
+									$direction_photo_src = wp_get_attachment_image_src($direction_photo,'medium');
 									?>
 								<div class="instruction-photo">
-									<img src="<?php echo wp_get_attachment_image_src($direction_photo,'medium')[0]; ?>" />
+									<img src="<?php echo $direction_photo_src[0]; ?>" />
 								</div>
 							</div>
 							<?php } ?>
