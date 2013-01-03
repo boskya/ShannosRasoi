@@ -72,8 +72,8 @@ query_posts("post_type=recipe&&meta_key=_jsFeaturedPost&meta_value=yes");
         	{
 	        	$img = wp_get_attachment_image_src( $id, "medium" );
 	        	?>
-	 	    		<img src="<?php echo esc_url( $img[0] ) ?>" alt="<?php echo esc_attr( $title ) ?>" /><br/><br/>
-	 	    			        		Hi, I am Shanno. My site features home style indian food recipes. 
+	 	    		<img src="<?php echo esc_url( $img[0] ) ?>" alt="<?php echo esc_attr( $title ) ?>" />
+	 	    		<span >Hi, I am Shanno. My site features home style indian food recipes.</span> 
 
 	 	    	<?php
 	         break;

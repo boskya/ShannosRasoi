@@ -16,6 +16,8 @@ $theme = new Hybrid();
 $recipify = new Recipify();
 add_action( 'after_setup_theme', array($recipify, 'setup'), 10 );
 add_action( 'parse_query',array($recipify,'changept' ));
+add_filter('pre_get_posts',array($recipify,'searchFilter'));
+
 
 
 /* set up custom Recipe type */
@@ -42,11 +44,11 @@ function recipify_content_nav( $nav_id ) {
 		<?php elseif ( $wp_query->max_num_pages > 1 && ( is_home() || is_archive() || is_search()  || is_category()) ) : // navigation links for home, archive, and search pages ?>
 
 		<?php if ( get_next_posts_link() ) : ?>
-		<div class="nav-next"><?php next_posts_link( __( 'NEXT<span></span>', 'recipify' ) ); ?></div>
+		<div class="nav-next"><?php next_posts_link( __( 'NEXT', 'recipify' ) ); ?></div>
 		<?php endif; ?>
 
 		<?php if ( get_previous_posts_link() ) : ?>
-		<div class="nav-previous"><?php previous_posts_link( __( '<span></span>PREVIOUS', 'recipify' ) ); ?></div>
+		<div class="nav-previous"><?php previous_posts_link( __( 'PREVIOUS', 'recipify' ) ); ?></div>
 		<?php endif; ?>
 
 	<?php endif; ?>
@@ -92,6 +94,19 @@ class Recipify {
 		}
 		return;
 	}
+
+	/*
+		Change search filter to recipe types
+	*/
+	function searchFilter($query) {
+  	 
+	   	 if ($query->is_search) {
+	   	     $query->set('post_type', array('recipe'));
+	   	     $query->set('posts_per_page','6');
+   		 };
+    	return $query;
+	 }
+
 
 	/*
 	* Adds support for custom header
