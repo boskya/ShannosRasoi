@@ -6,7 +6,9 @@
 
         	<h3>Explore <?php single_cat_title(); ?> Recipes</h3>
 
-	      	<?php  global $wp_query;
+	      	<?php global $post;
+	      	 global $wp_query;
+	      	
 			// $paged = (get_query_var("paged")) ? get_query_var("paged") : 1;
 			 //$args_extra=array(
 			//	"paged"=>$paged, //Pulls the paged function into the query
@@ -20,9 +22,48 @@
 			
 			$args = array_merge( $wp_query->query_vars, array("posts_per_page" => 3));
 			query_posts( $args ); 
-			?>
+			
+			$current_category = get_the_category();
+			$current_category_parent ="";
 
+			if ($current_category)
+			{
+				$current_category_parent= $current_category[0]->category_parent;
+				if(!$current_category_parent)
+				{
+					$current_category_parent = $current_category[0]->cat_ID;
+				}
+
+			}
+
+
+
+
+	$args = array(
+	'type'                     => 'recipe',
+	'child_of'                 => $current_category_parent,
+	'orderby'                  => 'name',
+	'order'                    => 'ASC',
+	'hide_empty'               => 0,
+	'hierarchical'             => 1,
+	'exclude'                  => '',
+	'include'                  => '',
+	'number'                   => '',
+	'taxonomy'                 => 'category',
+	'pad_counts'               => false );
+
+    $categories = get_categories( $args ); 
+	?>
+
+<?php 
+
+foreach ($categories as $category) {
+ 	//echo $category->cat_name;
+  }
+
+$categories ?>
         	<?php if(have_posts()) :?>	
+
 
         		<div class="recipe-collection">
 	       		<?php while ( have_posts() ) : the_post(); ?>

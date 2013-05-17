@@ -225,7 +225,7 @@ class Recipify_post {
 			$image = get_template_directory_uri().'/img/image.png';  
 			if ($meta)
 			{
-			 	$image =  wp_get_attachment_image_src($meta, 'full'); 
+			 	$image =  wp_get_attachment_image_src($meta, 'medium'); 
 				$image = $image[0]; 
 			}
 				
@@ -257,11 +257,11 @@ class Recipify_post {
 				$direction_photo_src =  $image;
 				
 				?>
-					<tr class="recipe-row">
-			  			<td>		
-				     		   <textarea name="recipe-directions-step_0" id="recipe-directions-step_0" rows="4" cols="80"><?php echo $direction_step ?></textarea> 
+					<tr class="recipe-row" style="width:100%">
+			  			<td style="width:80%">		
+				     		   <textarea name="recipe-directions-step_0" id="recipe-directions-step_0" rows="4" style="width:100%"><?php echo $direction_step ?></textarea> 
 			  			</td>
-			  			<td>
+			  			<td style="width:20%">
 							<input name="recipe-directions-photo_0" id="recipe-directions-photo_0" type="hidden" class="custom_upload_image" value="<?php echo $direction_photo ?>" /> 
 							   <img src="<?php echo $direction_photo_src ?>" class="custom_preview_image" alt="" /><br /> 
 						   		<input class="custom_upload_image_button button recipe_row_button" type="button" value="Choose Image" /> 

@@ -1,7 +1,6 @@
 <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 
  	<!-- Display the date (November 16th, 2009 format) and a link to other posts by this posts author. -->
- 		
 		<!-- Recipe using microdata -->
  		<article class="recipe" itemscope itemtype="http://schema.org/Recipe">
 			<div>
