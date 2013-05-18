@@ -135,7 +135,15 @@ class Recipify {
 		        false,
 		        0.1
 		    );
+		    wp_register_style(
+		        'bootstrap-style',
+		       trailingslashit( get_template_directory_uri() ). 'library/'. 'bootstrap/'. 'css/'. 'bootstrap-responsive.min.css',
+		        false,
+		        0.1
+		    );		    
 			wp_enqueue_style( 'recipify-style' );
+			wp_enqueue_style( 'bootstrap-style' );
+
 		}
 	}
 
