@@ -23,11 +23,7 @@
                     </span>
    					<h2 itemprop="name" class="title"><?php the_title(); ?></h2>
 					<span class="posted">
-						Posted by: 
-						<span itemprop="author">
-							<?php the_author_posts_link(); ?>
-						</span>
-							on 
+						Posted on: 
 						<time datetime="<?php the_time('F jS, Y') ?>"  itemprop="published">	<?php the_time('F jS, Y') ?></time>
 						</span>
 					</span>

@@ -43,6 +43,11 @@ a { text-decoration: none;}
 	box-shadow:0 0 5px #e6e6e6 inset;	
 }
 
+#main.width75
+{
+	width:75%;
+}
+
 #main.full-width
 {
 	width: 100%;

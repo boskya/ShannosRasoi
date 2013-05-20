@@ -5,10 +5,9 @@
 get_header();
 ?>
    <div id="content" class="clearfix">
-        <div id="main" class="with-sidebar clearfix" role="main">
+        <div id="main" class="width75 clearfix" role="main">
 	    	<?php get_template_part('loop','single-recipe'); ?>
         </div> <!-- end #main -->
-		<?php get_sidebar(); ?>
 	</div> <!-- end #content -->
     <script>(function(d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0];
