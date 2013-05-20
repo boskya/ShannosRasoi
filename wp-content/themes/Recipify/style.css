@@ -455,6 +455,18 @@ div.instruction
 	
 }
 
+.social {
+    float: right;
+}
+
+.social div {
+    float: left;
+}
+
+.twitter-container{
+    margin-right: -1.8em;
+}
+
 .instruction h4
 {
 	margin:0;
