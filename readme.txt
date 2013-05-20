@@ -1,1 +1,1 @@
-Website for storing, blogging recipes from Shann's kitchen
+Website for storing, blogging recipes from Shanno's kitchen
