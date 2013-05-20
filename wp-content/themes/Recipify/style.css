@@ -22,6 +22,7 @@ accessibility
 body { 
 	font-size:14px; line-height: 1.5em; 
 	font-family:Verdana, Geneva, sans-serif; 
+	padding:0px;
 } 
 
 body.custom-background
@@ -290,14 +291,67 @@ nav[role=navigation] ul.menu li ul.sub-menu li:hover a{
 	height: 100%;
 }
 
+#connected_container
+{
+	text-align:center;
+	background-color:#363535;
+	color:white;
+	margin-bottom:0;
+}
+
+#connected
+{
+	width: 98%;
+	margin:0 auto;
+	text-align:center;
+}
+
+#connected ul
+{
+	width:98%;
+	margin: 0 auto;
+	text-align:center;
+	padding:0px;
+}
+
+
+#connected li
+{
+	list-style: none;
+	display:inline;
+}
+
+#connected li a
+{
+	width:67px;
+	height:80px;
+	display:inline-block;
+
+}
+
+.facebook
+{
+	background: url("img/facebok-icon.png") no-repeat;
+}
+
+.twitter
+{
+	background: url("img/twitter-icon.png") no-repeat;
+}
+
+.mail
+{
+	background: url("img/mail-icon.png") no-repeat;
+}
 /* homepage profile */
 #profile
 {
 	display: inline-block;
-	width:35%;
-	margin: 1% auto;
-	vertical-align: top;
-	padding: 1%;
+	width:34%;
+	margin-top:2%;
+	margin:1% auto;
+	padding-left:2%;
+	padding-top:2%;
 }
 
 #profile img
@@ -497,7 +551,7 @@ div.instruction
 	color: #fff;
 	padding:5px 20px ;
 	text-align: center;
-	margin-top:20px;
+	border-top: 1px solid white;
 }
 
 .footer-wrap a

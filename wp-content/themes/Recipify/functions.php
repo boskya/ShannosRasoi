@@ -141,9 +141,11 @@ class Recipify {
 		        false,
 		        0.1
 		    );		    
-			wp_enqueue_style( 'recipify-style' );
-			wp_enqueue_style( 'bootstrap-style' );
+			wp_register_script('main_js', trailingslashit(get_template_directory_uri()).'js/'.'main.js',false,true);
 
+			wp_enqueue_style( 'bootstrap-style' );
+		wp_enqueue_style( 'recipify-style' );
+		wp_enqueue_script('main_js');
 		}
 	}
 

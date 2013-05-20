@@ -9,7 +9,6 @@ query_posts("post_type=recipe&&meta_key=_jsFeaturedPost&meta_value=yes");
 ?>
   <div id="content" class="clearfix">
         <div id="main" class="with-sidebar clearfix" role="main">
-		
 		<div id="slides" >
 <?php 
 	
@@ -51,7 +50,9 @@ query_posts("post_type=recipe&&meta_key=_jsFeaturedPost&meta_value=yes");
 
 	</div>
 </div>
+
 	<aside id='profile' class="widget">
+
 	<h2 class="widget-title">About me</h2>
 	<?php
 		$attachments = get_children( array(
@@ -77,14 +78,17 @@ query_posts("post_type=recipe&&meta_key=_jsFeaturedPost&meta_value=yes");
 			 	    		<img src="<?php echo esc_url( $img[0] ) ?>" alt="<?php echo esc_attr( $title ) ?>" />
 			 	    	</div>
 	 	    		</div>
-	 	    		<div class="row-fluid">
-			 	   		<span class="span12" ><h3><em>Hi, I am Shanno. </em></h3></span>
-
-	 	    		</div>
+	 	    	
 	 	    		<div class="row-fluid">
 	 	    			<div class="span12">
-	 	    				<p>I am from a vegetarian family of Udaipur, Rajasthan. Growing up, my father used to make special items and give ideas for my new dishes which my mother cooked to his liking. Being the eldest daughter, I started helping mom and slowly developed a deep interest in cooking with the encouragement of my father.  After my marriage I moved to Ahmedabad, Gujurat, then Bangkok Thailand and finally settled in Maryland, U.S.A. My cooking is influenced by my stay in various cultures including Rajasthani, Gujurati, Sindhi, Punjabi, South Indian and Thai.</p>
-							<p>I had the long desire to share my experience and expertise to make delicious healthy vegetarian food with you all.I appreciate the efforts and support of my family especially my daughters for the development of this site. Your suggestions and ideas to improve the recipes and the site are always welcome.</p></span> 
+	 	    				<p><em>Hi, I am Shanno</em> from  Udaipur India, now settled in USA. I learnt the art of vegetarian cooking with the guidance of my mother and inspiration from my father. 
+								I cherished the desire to share my skills and recipes of delicious Indian and Thai dishes with you all. I 
+								appreciate the efforts and support of my family, especially my daughters for the development of this 
+								site. Your suggestions to improve the recipes and the site are always welcome. 								
+								<a href="#" id="profile_hide">Read More</a>
+</p>
+	 	    				<p id="profile_hidden" style="display:none">I am from a vegetarian family of Udaipur, Rajasthan. Growing up, my father used to make special items and give ideas for new dishes which my mother cooked to his liking. Being the eldest daughter, I started helping mom and slowly developed a deep interest in cooking with the encouragement of my father.  After my marriage I moved to Ahmedabad, Gujurat, then Bangkok Thailand and finally settled in Maryland, U.S.A. My cooking is influenced by my stay in various cultures including Rajasthani, Gujurati, Sindhi, Punjabi, South Indian and Thai.</p>
+
 						</div>
 					</div>			
 	 	    	<?php
@@ -92,9 +96,20 @@ query_posts("post_type=recipe&&meta_key=_jsFeaturedPost&meta_value=yes");
 	        }
     	endforeach;
     	?>
+
+
 		<aside>
 </div>
+<div id="connected_container">
+	    <div id="connected">
+		<ul>
+			<li><a href="mailto:shanno.atlani@gmail.com" class="mail"></a>
+			<li><a href="http://www.twitter.com/shanno" class="twitter"></a>
 
+			<li><a href="http://www.facebook.com/shanno.atlani" class="facebook"></a>
+			</ul>
+		</div>
+</div>
 
 <script>
 (function($)

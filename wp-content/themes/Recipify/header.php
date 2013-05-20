@@ -29,6 +29,7 @@
 					<h2 id="site-tagline"><?php bloginfo( 'description' ); ?></h2>
 
 		</a>
+
 				<nav id="search" role="search">
 			<?php get_search_form(); ?>
 
