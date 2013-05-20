@@ -443,16 +443,15 @@ nav[role=navigation] ul.menu li ul.sub-menu li:hover a{
 
 div.instructions-content 
 {
-	margin:0;
+	margin: -1em 0 0;
 }
 
 
 div.instruction
 {
-	padding-right: 0.8em;
-	padding-bottom: 1em;
-	margin:0px;
-	border: 1px silver dotted;
+	padding: 1em;
+	margin:0;
+	border-bottom: 1px silver solid;
 	
 }
 

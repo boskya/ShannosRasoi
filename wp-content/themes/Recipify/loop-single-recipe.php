@@ -70,16 +70,16 @@
 					?>
 						<div class="instruction clearfix">
 							<h4> Step <?php echo $index + 1 ?></h4>
-								<div class="instruction-step"><?php echo $direction_step ?></div>
-								<?php if ($direction_photo)
-								{
-									$direction_photo_src = wp_get_attachment_image_src($direction_photo,'medium');
-									?>
-								<div class="instruction-photo">
-									<img src="<?php echo $direction_photo_src[0]; ?>" />
-								</div>
-							</div>
-							<?php } ?>
+                            <div class="instruction-step"><?php echo $direction_step ?></div>
+                            <?php if ($direction_photo)
+                            {
+                                $direction_photo_src = wp_get_attachment_image_src($direction_photo,'medium');
+                                ?>
+                            <div class="instruction-photo">
+                                <img src="<?php echo $direction_photo_src[0]; ?>" />
+                            </div>
+    						<?php } ?>
+                        </div>
 					<?php } ?>
 					</div>
 				<?php } ?>
