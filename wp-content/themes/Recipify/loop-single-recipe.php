@@ -13,14 +13,14 @@
 					<img itemprop="photo" src="<?php echo $final_image_src[0]; ?>" alt="" />
 				</div>
 				<?php } ?>
+				<div class="social">
+                    <div class='twitter-container'>
+                        <a href="https://twitter.com/share" class="twitter-share-button" style="float:right" data-lang="en">Tweet</a>
+                    </div>
+                    <div class="fb-like" data-send="true" data-layout="button_count" data-width="450" data-show-faces="false"></div>
+                    <div id="fb-root"></div>
+                </div>
 				<div class="description-block">
-                    <span class="social">
-                        <div class='twitter-container'>
-                            <a href="https://twitter.com/share" class="twitter-share-button" style="float:right" data-lang="en">Tweet</a>
-                        </div>
-                        <div class="fb-like" data-send="true" data-layout="button_count" data-width="450" data-show-faces="false"></div>
-                        <div id="fb-root"></div>
-                    </span>
    					<h2 itemprop="name" class="title"><?php the_title(); ?></h2>
 					<span class="posted">
 						Posted on: 
@@ -76,15 +76,17 @@
 					?>
 						<div class="instruction clearfix">
 							<h4> Step <?php echo $index + 1 ?></h4>
-                            <div class="instruction-step"><?php echo $direction_step ?></div>
-                            <?php if ($direction_photo)
-                            {
-                                $direction_photo_src = wp_get_attachment_image_src($direction_photo,'medium');
-                                ?>
-                            <div class="instruction-photo">
-                                <img src="<?php echo $direction_photo_src[0]; ?>" />
+                            <div class="instruction-step">
+                                <?php if ($direction_photo)
+                                {
+                                    $direction_photo_src = wp_get_attachment_image_src($direction_photo,'medium');
+                                    ?>
+                                    <div class="instruction-photo">
+                                        <img src="<?php echo $direction_photo_src[0]; ?>" />
+                                    </div>
+                                <?php } ?>
+                                <?php echo $direction_step ?>
                             </div>
-    						<?php } ?>
                         </div>
 					<?php } ?>
 					</div>
