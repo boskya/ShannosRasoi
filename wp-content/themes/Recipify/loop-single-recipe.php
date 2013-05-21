@@ -42,10 +42,14 @@
 							{ 
 								$ingredient_name = $ingredient['name'];
 								$ingredient_quantity = $ingredient['quantity'];
+								$ingredient_measure = $ingredient['measure'];
+
 								$ingredient_notes = $ingredient['notes'];
 							?>
 								<li itemprop="ingredient" itemscope itemtype="http://data-vocabulary.org/RecipeIngredient">
 									<span itemprop="amount"><?php echo $ingredient_quantity ?></span>
+									<span><?php echo $ingredient_measure ?></span>
+
 									<span itemprop="name"><?php echo $ingredient_name ?></span>
 									<span><?php echo $ingredient_notes ?></span>
 							   </li>
