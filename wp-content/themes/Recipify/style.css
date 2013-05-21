@@ -474,12 +474,15 @@ nav[role=navigation] ul.menu li ul.sub-menu li:hover a{
 	height: 100%;
 }
 
+.description-block h2
+{
+    margin: 0;
+}
 
 .recipe .description
 {
-	margin-top: 1em;
+	margin: .5em 0 0 1em;
 }
-
 
 .ingredients ul
 {
@@ -505,21 +508,21 @@ div.instructions-content
 	margin: -1em 0 0;
 }
 
-
 div.instruction
 {
 	padding: 1em;
 	margin:0;
 	border-bottom: 1px silver solid;
-	
 }
 
 .social {
-    float: right;
+    margin: 10px 0;
+    height: 20px;
 }
 
 .social div {
-    float: left;
+    float: right;
+    padding-right: .5em;
 }
 
 .twitter-container{
@@ -534,14 +537,15 @@ div.instruction
 .instructions-content .instruction-step
 {
 	float:left;
-	width: 50%;
 	padding: 0.4em;
+    width: 100%;
 }
 
 .instructions-content .instruction-photo
 {
 	float:right;
 	width:30%;
+    padding: .3em 1em;
 }
 
 .instruction-photo img
